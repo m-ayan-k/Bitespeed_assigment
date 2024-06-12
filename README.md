@@ -1,3 +1,5 @@
+## Wait for 2-3 mins to start the render server.
+
 # Backend Task: Identity Reconciliation
 
 ## Description
@@ -14,17 +16,17 @@ The system will manage contact information in a database table named Contact, wh
 # Routes
 
 ## Adding new data
-- **URL:** `/identify`
+- **URL:** `https://bitespeed-assigment.onrender.com/api/identify`
 - **Method:** `POST`
 - **Description:** Adds new data or update primary contacts to secondary contacts.
 
 ## Delete All data
-- **URL:** `/delete-all`
+- **URL:** `https://bitespeed-assigment.onrender.com/api/delete-all`
 - **Method:** `DELETE`
 - **Description:** Deletes all rows from table.
 
 ## Get All data
-- **URL:** `/contacts`
+- **URL:** `https://bitespeed-assigment.onrender.com/api/contacts`
 - **Method:** `GET`
 - **Description:** Retrieves all contacts
 
