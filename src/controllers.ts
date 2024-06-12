@@ -144,3 +144,55 @@ export const identifyContact = async (req: Request, res: Response) => {
         res.status(500).json({ error: 'Internal server error.' });
     }
 };
+
+// for delete all rows
+export const contactDelete = async (req: Request, res: Response) => {
+    try {
+        await Contact.destroy({ where: {} });
+
+        res.status(200).json({ message: 'All data deleted successfully.' });
+    } catch (error) {
+        console.error('Error deleting data:', error);
+        res.status(500).json({ error: 'Internal server error.' });
+    }
+};
+
+// will return all contacts
+export const getAllContacts = async (req: Request, res: Response) => {
+    try {
+        const allContacts = await Contact.findAll();
+        res.status(200).json(allContacts);
+    } catch (error) {
+        console.error('Error fetching contacts:', error);
+        res.status(500).json({ error: 'Internal server error.' });
+    }
+};
+
+// for deleting contacts based on id and also delte all direclty conneted(by linkedId) contacts
+export const  deleteContactsById =  async (req: Request, res: Response) => {
+    const idToDelete = req.params.id;
+
+    try {
+        //finding the item by ID
+        const itemToDelete = await Contact.findByPk(idToDelete);
+
+        if (!itemToDelete) {
+            return res.status(404).json({ error: 'Item not found.' });
+        }
+
+        // delete the item by ID and items that linked by this id
+        await Contact.destroy({
+            where: {
+                [Op.or]: [
+                    { id: idToDelete },
+                    { linkedId: idToDelete }
+                ]
+            }
+        });
+
+        res.status(200).json({ message: 'Item and related items deleted successfully.' });
+    } catch (error) {
+        console.error('Error deleting item:', error);
+        res.status(500).json({ error: 'Internal server error.' });
+    }
+};
